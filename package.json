@@ -1,0 +1,17 @@
+{
+  "name": "lab4-arena",
+  "version": "1.0.0",
+  "description": "Многопользовательская веб-игра в реальном времени (WebSockets, чистый JavaScript, без фреймворков)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.22.0"
+  },
+  "private": true
+}

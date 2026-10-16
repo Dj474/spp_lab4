@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Арена — многопользовательская игра в реальном времени</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="offlineBar" class="offline-bar hidden">
+    <strong>Нет соединения.</strong> Состояние игры сохранено локально — восстановление произойдёт автоматически после переподключения.
+  </div>
+
+  <header class="topbar">
+    <div class="logo">АРЕНА<span>маяк &amp; монеты</span></div>
+    <div id="status" class="status offline"><i></i><span id="statusText">не подключено</span></div>
+    <div class="score">Очки: <strong id="myScore">0</strong></div>
+  </header>
+
+  <main>
+    <section class="stage">
+      <canvas id="game" width="640" height="512"></canvas>
+      <div id="legend" class="legend">WASD / <span>стрелки</span> — движение &nbsp;•&nbsp; E / <span>пробел</span> — действие</div>
+    </section>
+
+    <aside class="panel">
+      <h2>Игроки <small id="onlineCount">0/0</small></h2>
+      <ul id="board" class="board"></ul>
+
+      <h2>Маяк</h2>
+      <div id="beaconInfo" class="beacon-info">нейтральный</div>
+
+      <h2>Соединение</h2>
+      <dl class="stats">
+        <div><dt>Состояние</dt><dd id="connState">—</dd></div>
+        <div><dt>Пинг</dt><dd id="rtt">—</dd></div>
+        <div><dt>Номер события</dt><dd id="seq">0</dd></div>
+        <div><dt>Очередь операций</dt><dd id="pending">0</dd></div>
+      </dl>
+
+      <h2>Правила</h2>
+      <ul class="rules">
+        <li>Монеты: <strong>+1</strong> очко</li>
+        <li>Захват маяка: <strong>+5</strong> очков</li>
+        <li>На клетку встаёт только один игрок, кроме маяка</li>
+        <li>Одновременные действия разрешает сервер</li>
+      </ul>
+
+      <button id="changePlayer" class="ghost">Сменить игрока</button>
+    </aside>
+  </main>
+
+  <div id="toasts" class="toasts"></div>
+
+  <div id="join" class="overlay">
+    <form id="joinForm" class="card">
+      <h1>Вход в арену</h1>
+      <p>Соберите монеты и захватите общий маяк раньше других. Игра синхронизируется по WebSocket в реальном времени.</p>
+      <label for="name">Имя игрока</label>
+      <input id="name" maxlength="16" placeholder="Например, Нейро" autocomplete="off" required />
+      <button type="submit" class="primary">Играть</button>
+    </form>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
