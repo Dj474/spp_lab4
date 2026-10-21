@@ -1,0 +1,17 @@
+services:
+  arena:
+    build: .
+    image: lab4-arena:latest
+    container_name: arena
+    init: true
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATA_DIR: /app/data
+    volumes:
+      - arena-data:/app/data
+
+volumes:
+  arena-data:

@@ -171,23 +171,30 @@ WebSocket-соединений (Render, Railway, Fly.io, VPS/виртуальн�
 4. После деплоя получите публичную ссылку вида `https://<имя>.onrender.com` — клиент
    автоматически переключится на `wss://` при загрузке по HTTPS.
 
-**Docker:**
-
-```dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install --omit=dev
-COPY . .
-ENV PORT=3000
-EXPOSE 3000
-CMD ["npm", "start"]
-```
+**Docker (готовые файлы `Dockerfile` и `docker-compose.yml` в корне проекта):**
 
 ```bash
-docker build -t arena .
-docker run -p 3000:3000 -v arena-data:/app/data arena
+docker build -t lab4-arena .
+docker run -d --name arena -p 3000:3000 -v arena-data:/app/data lab4-arena
+# ссылка: http://<ip-сервера>:3000
 ```
+
+Или через docker compose (том для сохранения состояния создаётся автоматически):
+
+```bash
+docker compose up -d --build
+```
+
+Обновление после изменения кода:
+
+```bash
+docker compose up -d --build
+# или: docker build -t lab4-arena . && docker rm -f arena && docker run -d --name arena -p 3000:3000 -v arena-data:/app/data lab4-arena
+```
+
+Полезные команды: `docker logs -f arena`, `docker restart arena`, `docker compose down`.
+Образ собирается на `node:20-alpine`, работает от пользователя `node`, содержит `HEALTHCHECK`
+и корректно сохраняет состояние при `docker stop` (SIGTERM → запись `data/game.json`).
 
 **VPS (nginx как реверс-прокси с поддержкой WebSocket):**
 
